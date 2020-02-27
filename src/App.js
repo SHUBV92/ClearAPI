@@ -6,11 +6,10 @@ class App extends Component{
 
   state = {
     images: [],
-    API: API_KEY
   }
 
   componentDidMount(){
-    fetch('https://api.thecatapi.com/v1/images/search?limit=6&page=100&order=DESC')
+    fetch(`https://api.thecatapi.com/v1/images/search?category_ids={{selected_category.id}}&api-key=${this.API}`)
     .then(res => res.json())
     .then((data) => {
       this.setState({images: data})
@@ -19,18 +18,18 @@ class App extends Component{
   }
 
 render() {
- console.log(this.state.images)
   return this.state.images.length === 0 ?
-  'Loading...' :
-
-    <ul className="">
+  <p>'Loading...'</p> :
+    <ul>
       {this.state.images.map(imgObj => (
-        <li>
+        <li className="card">
+        <h5 className="card-body">{imgObj.id}</h5>
+        {/* <h6 class="card-subtitle mb-2 text-muted">{imgObj.height}</h6> */}
           <img src={imgObj.url}className="cat-img" />
         </li>
+
       ))}
     </ul>
-  
   }
 }
 
