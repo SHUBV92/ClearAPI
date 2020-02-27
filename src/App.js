@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 const API_KEY = "9106bf97-aa4f-466f-9181-1bfab08c85e9"
 
 class App extends Component{
@@ -9,17 +10,19 @@ class App extends Component{
   }
 
   componentDidMount(){
-    fetch(`https://api.thecatapi.com/v1/images/search?category_ids={{selected_category.id}}&api-key=${this.API}`)
+    fetch(`https://api.thecatapi.com/v1/images/search?&api-key=${this.API}`)
     .then(res => res.json())
     .then((data) => {
       this.setState({images: data})
     })
-    .catch(console.log)
+    .catch((error)=>{
+      console.error(error)
+    })
   }
 
 render() {
   return this.state.images.length === 0 ?
-  <p>'Loading...'</p> :
+  <p>Loading...</p> :
     <ul>
       {this.state.images.map(imgObj => (
         <li className="card">
